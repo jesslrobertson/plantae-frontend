@@ -15,9 +15,13 @@ var options = {
   redirect: false
 }
 app.use(express.static('build', options))
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
-});
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'public/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
 
 const port = process.env.PORT || 9000
 
